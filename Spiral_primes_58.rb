@@ -6,22 +6,21 @@ def prime?(num)
   true
 end
 
-sum_all = 1.0
-sum_prime = 0
+primes = 0
 a = 3 # a square side length
-d = 1 # start
+# a * 2 - 1 - total diagonal numbers
+# a^2 - (a - 1) - bottom right corner
+# a^2 - 2 * (a - 1) - bottom left corner
+# a^2 - 3 * (a - 1) - top left corner
+# a^2 - 4 * (a - 1) - top right corner
 loop do
-  n = d + 1 # start new side
-  x = n + a - 2 # number from diagonal
-  for _ in 1..3 do
-    sum_prime += 1 if prime?(x)
-    x += a - 1
+  for i in 1..4 do
+    corner = a ** 2 - i * (a - 1)
+    primes += 1 if prime?(corner)
   end
-  sum_all += 4
-  if sum_prime / sum_all < 0.1
+  if primes.to_f / (a * 2 - 1) < 0.1
     break
   end
   a += 2
-  d = x
 end
 puts a # print a square side length
